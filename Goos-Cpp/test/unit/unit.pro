@@ -4,11 +4,13 @@ QT += testlib
 CONFIG += testcase
 
 HEADERS += \
-    auctionmessagetranslatortest.h
+    auctionmessagetranslatortest.h \
+    auctionsnipertest.h
 
 SOURCES += \
     auctionmessagetranslatortest.cpp \
-    main.cpp
+    main.cpp \
+    auctionsnipertest.cpp
 
 ##################################################
 # Use internal static library: auctionsniper-ui

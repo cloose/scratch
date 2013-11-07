@@ -11,10 +11,13 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 SOURCES += mainwindow.cpp \
-    auctionmessagetranslator.cpp
+    auctionmessagetranslator.cpp \
+    auctionsniper.cpp
 
 HEADERS += mainwindow.h \
-    auctionmessagetranslator.h
+    auctionmessagetranslator.h \
+    auctionsniper.h \
+    auction.h
 
 FORMS += \
     mainwindow.ui

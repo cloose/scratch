@@ -40,6 +40,7 @@ void FakeAuctionServer::startSellingItem()
 
 void FakeAuctionServer::hasReceivedJoinRequestFrom(const QString &sniperId)
 {
+    QVERIFY2(messageListener->wait(5000), "No join request received from sniper");
     receivesAMessageMatching(sniperId, QString());
 }
 
@@ -52,6 +53,7 @@ void FakeAuctionServer::reportPrice(int price, int increment, const QString &bid
 
 void FakeAuctionServer::hasReceivedBid(int bid, const QString &sniperId)
 {
+    QVERIFY2(messageListener->wait(5000), "No bid received from sniper");
     receivesAMessageMatching(sniperId, QString("SOLVersion: 1.1; Command: BID; Price: %1;").arg(bid));
 }
 
@@ -79,8 +81,6 @@ void FakeAuctionServer::messageReceived(const QXmppMessage &message)
 
 void FakeAuctionServer::receivesAMessageMatching(const QString &sniperId, const QString &messageExpected)
 {
-    QVERIFY2(messageListener->wait(5000), "No join request received from sniper");
-
     QCOMPARE(messageBody, messageExpected);
     QCOMPARE(fromJid, sniperId);
 }
