@@ -18,6 +18,11 @@ FakeAuctionServer::FakeAuctionServer(const QString &itemId, QObject *parent) :
     qRegisterMetaType<QXmppMessage>();
 }
 
+FakeAuctionServer::~FakeAuctionServer()
+{
+    delete connection;
+}
+
 void FakeAuctionServer::startSellingItem()
 {
     connection->connectToServer(QString("auction-%1@localhost/Auction").arg(id), "auction");
@@ -33,16 +38,27 @@ void FakeAuctionServer::startSellingItem()
             SLOT(messageReceived(QXmppMessage)));
 }
 
-void FakeAuctionServer::hasReceivedJoinRequestFromSniper()
+void FakeAuctionServer::hasReceivedJoinRequestFrom(const QString &sniperId)
 {
-    // wait 5 seconds for any message
-    QVERIFY2(messageListener->wait(5000), "No join request received from sniper");
+    receivesAMessageMatching(sniperId, QString());
+}
+
+void FakeAuctionServer::reportPrice(int price, int increment, const QString &bidder)
+{
+    connection->sendMessage(fromJid,
+                            QString("SOLVersion: 1.1; Event: PRICE; CurrentPrice: %1; Increment: %2; Bidder: %3;")
+                                    .arg(price).arg(increment).arg(bidder));
+}
+
+void FakeAuctionServer::hasReceivedBid(int bid, const QString &sniperId)
+{
+    receivesAMessageMatching(sniperId, QString("SOLVersion: 1.1; Command: BID; Price: %1;").arg(bid));
 }
 
 void FakeAuctionServer::announceClosed()
 {
     // send empty message signalling that the auction is closed
-    connection->sendMessage(fromJid, QString());
+    connection->sendMessage(fromJid, QString("SOLVersion: 1.1; Event: CLOSE;"));
 }
 
 void FakeAuctionServer::stop()
@@ -58,4 +74,13 @@ QString FakeAuctionServer::itemId() const
 void FakeAuctionServer::messageReceived(const QXmppMessage &message)
 {
     fromJid = message.from();
+    messageBody = message.body();
+}
+
+void FakeAuctionServer::receivesAMessageMatching(const QString &sniperId, const QString &messageExpected)
+{
+    QVERIFY2(messageListener->wait(5000), "No join request received from sniper");
+
+    QCOMPARE(messageBody, messageExpected);
+    QCOMPARE(fromJid, sniperId);
 }

@@ -6,6 +6,7 @@
 namespace Ui {
 class MainWindow;
 }
+class AuctionMessageTranslator;
 class QXmppClient;
 class QXmppMessage;
 
@@ -24,7 +25,7 @@ public:
 
 private slots:
     void connectionEstablished();
-    void messageReceived(const QXmppMessage &message);
+    void auctionClosed();
 
 private:
     void connectTo(const QString &hostname, const QString &username, const QString &password);
@@ -34,6 +35,7 @@ private:
     Ui::MainWindow *ui;
     QString itemId;
     QXmppClient *connection;
+    AuctionMessageTranslator *translator;
 
     static const QString AUCTION_RESOURCE;
     static const QString AUCTION_ID_FORMAT;

@@ -15,9 +15,12 @@ class FakeAuctionServer : public QObject
 
 public:
     explicit FakeAuctionServer(const QString &itemId, QObject *parent = 0);
+    ~FakeAuctionServer();
 
     void startSellingItem();
-    void hasReceivedJoinRequestFromSniper();
+    void hasReceivedJoinRequestFrom(const QString &sniperId);
+    void reportPrice(int price, int increment, const QString &bidder);
+    void hasReceivedBid(int bid, const QString &sniperId);
     void announceClosed();
     void stop();
 
@@ -27,8 +30,11 @@ private slots:
     void messageReceived(const QXmppMessage &message);
 
 private:
+    void receivesAMessageMatching(const QString &sniperId, const QString &messageExpected);
+
     QString id;
     QString fromJid;
+    QString messageBody;
     QXmppClient *connection;
     QSignalSpy *messageListener;
 };

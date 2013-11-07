@@ -15,10 +15,13 @@ private slots:
     void initTestCase();
 
     void sniperJoinsAuctionUntilAuctionCloses();
+    void sniperMakesAHigherBidButLoses();
 
     void cleanupTestCase();
 
 private:
+    void after();
+
     FakeAuctionServer *auction;
     ApplicationRunner *application;
 };

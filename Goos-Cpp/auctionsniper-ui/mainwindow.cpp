@@ -3,6 +3,8 @@
 
 #include <QXmppClient.h>
 
+#include "auctionmessagetranslator.h"
+
 const QString MainWindow::AUCTION_RESOURCE = QStringLiteral("Auction");
 const QString MainWindow::AUCTION_ID_FORMAT = QStringLiteral("auction-%1@%2/%3");
 
@@ -11,7 +13,8 @@ MainWindow::MainWindow(const QString &hostname, const QString &username, const Q
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     itemId(id),
-    connection(new QXmppClient(this))
+    connection(new QXmppClient(this)),
+    translator(new AuctionMessageTranslator(this))
 {
     setObjectName(MAIN_WINDOW_NAME);
     ui->setupUi(this);
@@ -19,14 +22,22 @@ MainWindow::MainWindow(const QString &hostname, const QString &username, const Q
     connect(connection, SIGNAL(connected()),
             SLOT(connectionEstablished()));
     connect(connection, SIGNAL(messageReceived(QXmppMessage)),
-            SLOT(messageReceived(QXmppMessage)));
+            translator, SLOT(messageReceived(QXmppMessage)));
 
     // connect to message broker
     connectTo(hostname, username, password);
+
+    connect(translator, SIGNAL(auctionClosed()),
+            SLOT(auctionClosed()));
 }
 
 MainWindow::~MainWindow()
 {
+    connection->disconnectFromServer();
+    delete connection;
+
+    delete translator;
+
     delete ui;
 }
 
@@ -36,7 +47,7 @@ void MainWindow::connectionEstablished()
     connection->sendMessage(auctionId(), QString());
 }
 
-void MainWindow::messageReceived(const QXmppMessage &)
+void MainWindow::auctionClosed()
 {
     // auction closed so we lost
     ui->sniperStatusLabel->setText("Lost");

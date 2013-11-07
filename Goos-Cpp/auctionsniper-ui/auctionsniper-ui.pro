@@ -10,9 +10,11 @@ TARGET = auctionsniper-ui
 TEMPLATE = lib
 CONFIG += staticlib
 
-SOURCES += mainwindow.cpp
+SOURCES += mainwindow.cpp \
+    auctionmessagetranslator.cpp
 
-HEADERS += mainwindow.h
+HEADERS += mainwindow.h \
+    auctionmessagetranslator.h
 
 FORMS += \
     mainwindow.ui
