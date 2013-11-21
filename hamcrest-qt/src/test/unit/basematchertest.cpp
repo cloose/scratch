@@ -6,10 +6,11 @@
 #include <description.h>
 using namespace Hamcrest;
 
+namespace {
 class MatcherMock : public BaseMatcher<int>
 {
 public:
-    virtual bool matches(const int &item) const
+    virtual bool matches(const int &) const
     {
         QWARN("Unsupported Operation");
         return false;
@@ -20,9 +21,10 @@ public:
         description.appendText("SOME DESCRIPTION");
     }
 };
+}
 
 void BaseMatcherTest::describesItselfWithToStringMethod()
 {
-    MatcherMock *someMatcher = new MatcherMock();
+    QScopedPointer<MatcherMock> someMatcher(new MatcherMock());
     QCOMPARE(someMatcher->toString(), QStringLiteral("SOME DESCRIPTION"));
 }

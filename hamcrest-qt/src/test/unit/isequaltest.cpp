@@ -36,7 +36,7 @@ class ObjectMock
 };
 
 
-inline QString ToString(ObjectMock *value)
+inline QString ToString(ObjectMock *)
 {
     return "ARGUMENT DESCRIPTION";
 }

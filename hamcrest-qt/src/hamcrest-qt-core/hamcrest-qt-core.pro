@@ -5,15 +5,18 @@
 #-------------------------------------------------
 
 QT       -= gui
+QT       += testlib
 
 TARGET = hamcrest-qt-core
 TEMPLATE = lib
 
+CONFIG += exceptions
 #DEFINES += HAMCRESTQTCORE_LIBRARY
 
 SOURCES += description.cpp \
     basedescription.cpp \
-    stringdescription.cpp
+    stringdescription.cpp \
+    matcherassert.cpp
 
 HEADERS += description.h\
     selfdescribing.h \
@@ -21,7 +24,8 @@ HEADERS += description.h\
     basematcher.h \
     isequal.h \
     basedescription.h \
-    stringdescription.h
+    stringdescription.h \
+    matcherassert.h
 
 unix:!symbian {
     maemo5 {

@@ -9,7 +9,7 @@ QT       += testlib
 QT       -= gui
 
 TARGET = basematchertest
-CONFIG   += console
+CONFIG   += console exceptions
 CONFIG   -= app_bundle
 
 TEMPLATE = app
@@ -18,13 +18,15 @@ TEMPLATE = app
 SOURCES += basematchertest.cpp \
     main.cpp \
     basedescriptiontest.cpp \
-    isequaltest.cpp
+    isequaltest.cpp \
+    matcherasserttest.cpp
 DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 HEADERS += \
     basematchertest.h \
     basedescriptiontest.h \
-    isequaltest.h
+    isequaltest.h \
+    matcherasserttest.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../hamcrest-qt-core/release/ -lhamcrest-qt-core
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../hamcrest-qt-core/debug/ -lhamcrest-qt-core

@@ -34,7 +34,7 @@ public:
      * @param mismatchDescription
      * The description to be built or appended to.
      */
-    virtual void describeMismatch(const T &item, Description &mismatchDescription) = 0;
+    virtual void describeMismatch(const T &item, Description &mismatchDescription) const = 0;
 };
 
 } // namespace Hamcrest

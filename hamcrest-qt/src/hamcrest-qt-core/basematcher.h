@@ -12,13 +12,13 @@ template <typename T>
 class BaseMatcher : public Matcher<T>
 {
 public:
-    virtual void describeMismatch(const T &item, Description &description);
+    virtual void describeMismatch(const T &item, Description &description) const;
 
     virtual QString toString() const;
 };
 
 template <typename T>
-void BaseMatcher<T>::describeMismatch(const T &item, Description &description)
+void BaseMatcher<T>::describeMismatch(const T &item, Description &description) const
 {
     description.appendText(QStringLiteral("was ")).appendValue(item);
 }
