@@ -25,7 +25,8 @@ HEADERS += description.h\
     isequal.h \
     basedescription.h \
     stringdescription.h \
-    matcherassert.h
+    matcherassert.h \
+    is.h
 
 unix:!symbian {
     maemo5 {

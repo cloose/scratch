@@ -42,6 +42,12 @@ QSharedPointer<Matcher<T> > equalTo(const T &operand)
     return QSharedPointer<Matcher<T> >(new IsEqual<T>(operand));
 }
 
+// template specialization for c-style string
+inline QSharedPointer<Matcher<QString> > equalTo(const char *operand)
+{
+    return QSharedPointer<Matcher<QString> >(new IsEqual<QString>(QString(operand)));
+}
+
 } // namespace Hamcrest
 
 #endif // HAMCREST_ISEQUAL_H

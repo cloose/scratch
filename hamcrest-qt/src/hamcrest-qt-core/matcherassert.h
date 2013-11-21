@@ -1,5 +1,5 @@
-#ifndef MATCHERASSERT_H
-#define MATCHERASSERT_H
+#ifndef HAMCREST_MATCHERASSERT_H
+#define HAMCREST_MATCHERASSERT_H
 
 #include <qtestcase.h>
 #include "matcher.h"
@@ -94,4 +94,4 @@ do {\
 
 } // namespace Hamcrest
 
-#endif // MATCHERASSERT_H
+#endif // HAMCREST_MATCHERASSERT_H

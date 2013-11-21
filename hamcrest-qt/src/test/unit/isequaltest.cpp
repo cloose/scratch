@@ -6,13 +6,15 @@
 #include <matcher.h>
 using namespace Hamcrest;
 
-template <typename T>
-void assertDescription(const QString &expected, const QSharedPointer<Matcher<T> > &matcher)
-{
-    Description *description = new StringDescription();
-    description->appendDescriptionOf(*matcher);
-    QCOMPARE(description->toString(), expected);
-}
+#include "abstractmatcher.h"
+
+//template <typename T>
+//void assertDescription(const QString &expected, const QSharedPointer<Matcher<T> > &matcher)
+//{
+//    Description *description = new StringDescription();
+//    description->appendDescriptionOf(*matcher);
+//    QCOMPARE(description->toString(), expected);
+//}
 
 void IsEqualTest::comparesObjectsUsingEqualsMethod()
 {
